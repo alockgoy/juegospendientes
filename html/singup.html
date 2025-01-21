@@ -1,11 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../css/singup.css">
+    <title>Crear cuenta</title>
 </head>
+
 <body>
-    
+
+    <main>
+        <h1>Crear una cuenta</h1>
+
+        <!-- Formulario -->
+        <form action="../php/singup.php" method="post">
+            <!--Campo para el nombre de usuario-->
+            <label for="username">Nombre de usuario: </label>
+            <input type="text" name="username" placeholder="Escribe tu nombre de usuario" pattern="[a-zA-Z0-9]+" required /> <br /><br />
+
+            <!--Campo para el correo electrónico-->
+            <label for="email">Correo electrónico: </label>
+            <input type="email" name="correo" placeholder="Escribe tu correo electrónico" required /> <br /><br />
+
+            <!--Campo para la contraseña-->
+            <label for="password">Contraseña: </label>
+            <input type="password" name="clave" placeholder="Escribe una contraseña" required /><br/><br/>
+
+            <!--Botón para enviar el formulario-->
+            <button type="submit">Crear cuenta</button>
+        </form>
+
+    </main>
 </body>
+
 </html>

@@ -5,7 +5,7 @@
     ini_set('display_errors', 1);    
 
     //comprobar que existe el archivo de configuración
-    $configPath = __DIR__ . '/../config/config.php';
+    $configPath = __DIR__ . '../sql/config.php';
     if (!file_exists($configPath)) {
         echo "<p><strong>No se encuentra el archivo de configuración</strong><p>";
     }

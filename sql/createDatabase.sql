@@ -38,3 +38,9 @@ SELECT * FROM Juegos;
 
 /* Consulta para obtener todos los usuarios */
 SELECT * FROM Usuarios;
+
+/* Consulta para obtener los valores de la tabla para vincular */
+SELECT * FROM Anade;
+
+/* Consulta para obtener los juegos añadidos por un usuario concreto */
+SELECT juego.poster, juego.nombre, juego.puntuacion_metacritic, juego.duracion_horas, juego.indicador FROM Juegos as juego INNER JOIN Anade as vincula ON vincula.id_juego = juego.id INNER JOIN Usuarios as usuario ON vincula.nombre_usuario = usuario.nombre_usuario WHERE usuario.nombre_usuario = ?; 

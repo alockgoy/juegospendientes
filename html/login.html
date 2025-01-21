@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Iniciar sesión</title>
+  <link rel="stylesheet" href="../css/login.css"/>
+  <meta name="description" content=""/>
+
+  <meta property="og:title" content=""/>
+  <meta property="og:type" content=""/>
+  <meta property="og:url" content=""/>
+  <meta property="og:image" content=""/>
+  <meta property="og:image:alt" content=""/>
+
+  <link rel="icon" href="/favicon.ico" sizes="any"/>
+  <link rel="icon" href="/icon.svg" type="image/svg+xml"/>
+  <link rel="apple-touch-icon" href="icon.png"/>
+
+  <link rel="manifest" href="site.webmanifest"/>
+  <meta name="theme-color" content="#fafafa"/>
+</head>
+
+<body>
+
+  <h1>Iniciar sesión</h1>
+
+  <main>
+    <form action="../php/login.php" method="post">
+      <!--Campo para el nombre del usuario-->
+      <label for="username">Nombre de usuario: </label>
+      <input type="text" name="username" placeholder="Escribe tu nombre de usuario" required /> <br/><br/>
+
+      <!--Campo para la contraseña del usuario-->
+      <label for="password">Contraseña: </label>
+      <input type="password" name="clave" placeholder="Escribe tu contraseña" required /> <br/><br/>
+
+      <!--Botón para enviar el formulario-->
+      <button type="submit">Iniciar sesión</button>
+
+      <!--Enlace para crear cuenta-->
+      <section>
+        <a href="./html/singup.html">Crear cuenta</a>
+      </section>
+    </form>
+  </main>
+
+</body>
+
+</html>

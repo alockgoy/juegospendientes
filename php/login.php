@@ -1,3 +1,4 @@
 <?php
- echo "<h1>Hello da</h1>"
+    //traer el archivo de conexión
+    
 ?>

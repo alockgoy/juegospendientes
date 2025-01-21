@@ -33,6 +33,9 @@ CREATE USER 'usuario_juegos'@'localhost' IDENTIFIED WITH caching_sha2_password B
 GRANT ALL PRIVILEGES ON JuegosPendientes.* TO 'usuario_juegos'@'localhost';
 FLUSH PRIVILEGES;
 
+/* Eliminar al usuario (por el motivo que sea) */
+DROP USER "usuario_juegos"@localhost;
+
 /* Consulta para obtener todos los juegos */
 SELECT * FROM Juegos;
 

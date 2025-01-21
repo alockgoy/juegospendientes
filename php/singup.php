@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $prepararConsultaInsercion = $conectar->prepare($consultaInsertarUsuario); //preparar la sentencia
         $prepararConsultaInsercion->bind_param("sss", $nombreUsuario, $correoUsuario, $hashPassword); //blindar los parámetros
         $prepararConsultaInsercion->execute(); //ejecutar la consulta
-        echo "<strong>Usuario creado</strong>";
+        header("../html/login.html");
     } catch (mysqli_sql_exception $e) {
         die("Error creando al usuario: " . $e->getMessage());
     }

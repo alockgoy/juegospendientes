@@ -29,7 +29,7 @@ CREATE TABLE Anade (
 );
 
 /* Crear un usuario que tenga permisos sobre esta base de datos sin necesidad de tirar de root*/
-CREATE USER 'usuario_juegos'@'localhost' IDENTIFIED BY 'Franceselquemehackee@123';
+CREATE USER 'usuario_juegos'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'Franceselquemehackee@123';
 GRANT ALL PRIVILEGES ON JuegosPendientes.* TO 'usuario_juegos'@'localhost';
 FLUSH PRIVILEGES;
 

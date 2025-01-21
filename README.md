@@ -1,1 +1,2 @@
-# juegospendientes
+# Juegos pendientes
+Seguramente a mucha gente que juega videojuegos le ha pasado el no poder acabar todos los que tienen en la biblioteca y no saben organizarse para ello. Gracias a esta sencilla aplicación, podrás añadir los juegos que tienes pendientes, junto con su puntuación y duración, y la página se encargará de ordenarlos desde el que tiene una mayor puntuación con menor duración en adelante.

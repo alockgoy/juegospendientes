@@ -80,8 +80,15 @@ if (!isset($_SESSION['nombre_usuario'])) {
                 if ($resultado->num_rows > 0) {
                     //obtener datos
                     while ($fila = $resultado->fetch_assoc()) {
-                        //mostrar imagen
-                        echo '<div class="image"><img src="' . $fila['poster'] . '" alt="Imagen"></div>';
+                        //depuración para mostrar el poster
+                        $rutaPoster = "../img/avatares_juegos/" . htmlspecialchars($fila['poster']);
+
+                        // Verificar si el poster existe antes de mostrarlo
+                        if (file_exists($rutaPoster)) {
+                            echo '<div class="imagen"><img src="' . $rutaPoster . '" alt="Poster del juego"></div>';
+                        } else {
+                            echo '<div class="imagen"><p>Imagen no disponible</p></div>';
+                        }
 
                         // Mostrar otros datos
                         echo '<div class="texto">' . htmlspecialchars($fila['nombre']) . '</div>';

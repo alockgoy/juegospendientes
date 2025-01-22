@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         }
 
         //crear un nombre único para el poster
-        $nombreUnicoArchivo = uniqid("poster_") . "_" . basename($poster);
+        $nombreUnicoArchivo = uniqid("poster_") . "_" . basename($_FILES['poster']['name']);
         $rutaPoster = $directorioPoster . $nombreUnicoArchivo;
 
         // mover el archivo al directorio de poster
@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         }
 
         // ruta final para guardar en la base de datos
-        $avatar = "../img/avatares_juegos/" . $nombreUnicoArchivo;
+        $poster = $nombreUnicoArchivo;
     } else {
         $error = $_FILES['poster']['error'];
         echo "<p>Error: No se ha subido ningún archivo o ha ocurrido un error al subir el archivo. Código de error: $error</p>";

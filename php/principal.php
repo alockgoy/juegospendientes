@@ -50,6 +50,12 @@ if (!isset($_SESSION['nombre_usuario'])) {
             <section>
                 <a href="./logout.php">Cerrar sesión</a>
             </section>
+
+            <section>
+                <?php
+                    //echo "<a href='./borrarJuego.php?nombre_usuario=" . $_SESSION['nombre_usuario'] . "'>Borrar cuenta</a>";
+                ?>
+            </section>
         </nav>
     </header>
 
@@ -95,7 +101,9 @@ if (!isset($_SESSION['nombre_usuario'])) {
                         echo '<div class="texto"> Nombre: ' . htmlspecialchars($fila['nombre']) . '</div>';
                         echo '<div class="texto">Puntuación en Metacritic: ' . htmlspecialchars($fila['puntuacion_metacritic']) . '</div>';
                         echo '<div class="texto">Duración: ' . htmlspecialchars($fila['duracion_horas']) . '</div>';
-                        echo '<div class="texto"> Indicador: ' . htmlspecialchars($fila['indicador']) . '</div>';
+                        echo '<div class="texto indicador"> Indicador: ' . htmlspecialchars($fila['indicador']) . '</div>';
+                        echo '<br/>';
+                        echo '<a href="" onclick="return confirmarEliminacion()">Borrar juego</a>';
                     }
                 } else {
                     echo "<p><strong>No hay datos disponibles</strong></p>";
@@ -110,10 +118,10 @@ if (!isset($_SESSION['nombre_usuario'])) {
                 die("Error generando la tabla: " . $e->getMessage());
             }
             ?>
-            <br/>
-            <a href="">Borrar juego</a>
         </div>
     </main>
+
+    <script src="../js/app.js"></script>
 
     <footer>
 

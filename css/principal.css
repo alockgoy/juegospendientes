@@ -1,0 +1,76 @@
+/* Estilos generales */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid white;
+    border-radius: 5px;
+}
+
+nav a:hover{
+    background-color: white;
+    color: black;
+}
+
+main {
+    padding: 20px;
+}
+
+.contenedor {
+    display: inline-block;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.contenedor { /* Contenedor para los datos del juego */
+    border: 1px solid #ddd; /* Borde sutil */
+    padding: 10px;
+    border-radius: 5px; /* Bordes redondeados */
+    text-align: left; /* Alinea el texto a la izquierda */
+    margin-top: 10px; /* Separación de la imagen */
+}
+
+.contenedor a {
+    display: block;
+    text-align: center;
+}
+
+.texto {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    border-radius: 8px;
+}
+
+img{
+    max-width: 300px; 
+    max-height: 300px;
+    display: block;
+    margin: 0 auto 10px; /* Centra la imagen horizontalmente */
+    border-radius: 5px;
+}
+
+

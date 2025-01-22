@@ -33,6 +33,7 @@ if (!isset($_SESSION['nombre_usuario'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/principal.css" />
     <title>Tus juegos pendientes</title>
 </head>
 
@@ -47,7 +48,7 @@ if (!isset($_SESSION['nombre_usuario'])) {
             </section>
 
             <section>
-                <a href="">Cerrar sesión</a>
+                <a href="./logout.php">Cerrar sesión</a>
             </section>
         </nav>
     </header>
@@ -91,10 +92,10 @@ if (!isset($_SESSION['nombre_usuario'])) {
                         }
 
                         // Mostrar otros datos
-                        echo '<div class="texto">' . htmlspecialchars($fila['nombre']) . '</div>';
-                        echo '<div class="texto">' . htmlspecialchars($fila['puntuacion_metacritic']) . '</div>';
-                        echo '<div class="texto">' . htmlspecialchars($fila['duracion_horas']) . '</div>';
-                        echo '<div class="texto">' . htmlspecialchars($fila['indicador']) . '</div>';
+                        echo '<div class="texto"> Nombre: ' . htmlspecialchars($fila['nombre']) . '</div>';
+                        echo '<div class="texto">Puntuación en Metacritic: ' . htmlspecialchars($fila['puntuacion_metacritic']) . '</div>';
+                        echo '<div class="texto">Duración: ' . htmlspecialchars($fila['duracion_horas']) . '</div>';
+                        echo '<div class="texto"> Indicador: ' . htmlspecialchars($fila['indicador']) . '</div>';
                     }
                 } else {
                     echo "<p><strong>No hay datos disponibles</strong></p>";
@@ -109,6 +110,8 @@ if (!isset($_SESSION['nombre_usuario'])) {
                 die("Error generando la tabla: " . $e->getMessage());
             }
             ?>
+            <br/>
+            <a href="">Borrar juego</a>
         </div>
     </main>
 

@@ -35,6 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         //comprobar también que el nombre de usuario "no es una cosa rara"
     } elseif (!preg_match("/^[a-zA-Z0-9]+$/", $nombreUsuario)) {
         die("El nombre de usuario solo puede contener letras y números.");
+    } elseif (!filter_var($correoUsuario, FILTER_VALIDATE_EMAIL)) {
+        die("El correo electrónico no es válido.");
     }
 
     /* fin comprobaciones (por ahora) */
@@ -49,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $prepararConsultaInsercion = $conectar->prepare($consultaInsertarUsuario); //preparar la sentencia
         $prepararConsultaInsercion->bind_param("sss", $nombreUsuario, $correoUsuario, $hashPassword); //blindar los parámetros
         $prepararConsultaInsercion->execute(); //ejecutar la consulta
-        header("../html/login.html");
+        header("Location: ../html/login.html");
     } catch (mysqli_sql_exception $e) {
         die("Error creando al usuario: " . $e->getMessage());
     }

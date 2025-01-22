@@ -39,19 +39,22 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         //comprobar que el usuario existe
         if ($resultado->num_rows > 0) {
 
-            $usuario = $result->fetch_assoc();
+            $usuario = $resultado->fetch_assoc();
 
             //comprobar la contraseña
             $hashedPassword = hash('sha256', $claveUsuario . $usuario['salt']);
 
             //comprobar que la contraseña es correcta
-            if ($hashedPassword === $usuario['password']) {
+            if ($hashedPassword === $usuario['contrasena']) {
 
                 //guardar la información del usuario en la sesión
                 $_SESSION['nombre_usuario'] = $usuario['nombre_usuario'];
 
                 //crear una cookie de sesión que caduque en una hora
                 setcookie(session_name(), session_id(), time() + 3600, "/");
+
+                //cerrar la conexión
+                $conectar->close();
 
                 //redirigir al usuario
                 header("Location: ./principal.php");
@@ -62,9 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         } else{
             echo "<p>Error: Usuario o contraseña incorrectos.</p>";
         }
-
-        //cerrar la conexión
-        $conectar->close();
 
     } catch (mysqli_sql_exception $e) {
         //cerrar la conexión

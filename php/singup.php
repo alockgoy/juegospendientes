@@ -47,12 +47,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     //insertar al nuevo usuario en la base de datos
     try {
-        $consultaInsertarUsuario = "INSERT INTO Usuarios (nombre_usuario, email, contrasena) VALUES (?,?,?);";
+        $consultaInsertarUsuario = "INSERT INTO Usuarios (nombre_usuario, email, salt, contrasena) VALUES (?,?,?,?);";
         $prepararConsultaInsercion = $conectar->prepare($consultaInsertarUsuario); //preparar la sentencia
-        $prepararConsultaInsercion->bind_param("sss", $nombreUsuario, $correoUsuario, $hashPassword); //blindar los parámetros
+        $prepararConsultaInsercion->bind_param("ssis", $nombreUsuario, $correoUsuario, $salt ,$hashPassword); //blindar los parámetros
         $prepararConsultaInsercion->execute(); //ejecutar la consulta
+        //cerrar la conexión
+        $conectar->close();
         header("Location: ../html/login.html");
     } catch (mysqli_sql_exception $e) {
+        //cerrar la conexión
+        $conectar->close();
         die("Error creando al usuario: " . $e->getMessage());
     }
 }

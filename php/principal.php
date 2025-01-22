@@ -21,7 +21,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['nombre_usuario'])) {
-    header("Location: ./login.php");
+    header("Location: ../html/login.html");
     exit();
 }
 
@@ -43,7 +43,7 @@ if (!isset($_SESSION['nombre_usuario'])) {
 
         <nav>
             <section>
-                <a href="">Añadir un juego</a>
+                <a href="../html/insertarJuego.html">Añadir un juego</a>
             </section>
 
             <section>
@@ -79,16 +79,16 @@ if (!isset($_SESSION['nombre_usuario'])) {
                 //comprobar que hay al menos 1 resultado
                 if ($resultado->num_rows > 0) {
                     //obtener datos
-                    $fila = $resultado->fetch_assoc();
+                    while ($fila = $resultado->fetch_assoc()) {
+                        //mostrar imagen
+                        echo '<div class="image"><img src="' . $fila['poster'] . '" alt="Imagen"></div>';
 
-                    //mostrar imagen
-                    echo '<div class="image"><img src="' . $fila['imagen'] . '" alt="Imagen"></div>';
-
-                    // Mostrar otros datos
-                    echo '<div class="texto">' . htmlspecialchars($fila['nombre']) . '</div>';
-                    echo '<div class="texto">' . htmlspecialchars($fila['puntuacion_metacritic']) . '</div>';
-                    echo '<div class="texto">' . htmlspecialchars($fila['duracion_horas']) . '</div>';
-                    echo '<div class="texto">' . htmlspecialchars($fila['indicador']) . '</div>';
+                        // Mostrar otros datos
+                        echo '<div class="texto">' . htmlspecialchars($fila['nombre']) . '</div>';
+                        echo '<div class="texto">' . htmlspecialchars($fila['puntuacion_metacritic']) . '</div>';
+                        echo '<div class="texto">' . htmlspecialchars($fila['duracion_horas']) . '</div>';
+                        echo '<div class="texto">' . htmlspecialchars($fila['indicador']) . '</div>';
+                    }
                 } else {
                     echo "<p><strong>No hay datos disponibles</strong></p>";
                 }

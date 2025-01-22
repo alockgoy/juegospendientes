@@ -6,6 +6,7 @@ USE JuegosPendientes;
 CREATE TABLE Usuarios (
     nombre_usuario VARCHAR(50) PRIMARY KEY,
     email VARCHAR(100) NOT NULL,
+    salt VARCHAR(255) NOT NULL,
     contrasena VARCHAR(100) NOT NULL
 );
 

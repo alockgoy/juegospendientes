@@ -9,4 +9,4 @@
 
 9. Por alguna razón, al poner de valor "10" en la nota de un juego, sale un error.
 10. Cuando se borra un juego, la imagen de este permanece en el servidor.
-
+11. Si existe una cookie de sesión, redirigir automáticamente de login a principal

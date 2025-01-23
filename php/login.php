@@ -18,6 +18,19 @@ if (!$conectar) {
 //empezar una sesión
 session_start();
 
+//si existe una cookie de sesión, redirigir a principal
+if (isset($_SESSION['nombre_usuario'])) {
+    header("Location: ./principal.php");
+    exit();
+}
+if (isset($_COOKIE['usuario_logueado'])) {
+    // Restaurar sesión desde la cookie
+    $_SESSION['nombre_usuario'] = $_COOKIE['usuario_logueado'];
+    header("Location: ./principal.php");
+    exit();
+}
+
+
 //comprobar que se ha pulsado el botón de envío del formulario de iniciar sesión
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     //asignar los valores introducidos a variables
@@ -50,15 +63,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 //guardar la información del usuario en la sesión
                 $_SESSION['nombre_usuario'] = $usuario['nombre_usuario'];
 
-                //crear una cookie de sesión que caduque en una hora
-                setcookie(session_name(), session_id(), time() + 3600, "/");
+                setcookie('usuario_logueado', $usuario['nombre_usuario'], time() + 3600, "/");
 
                 //cerrar la conexión
                 $conectar->close();
 
                 //redirigir al usuario
                 header("Location: ./principal.php");
-
+                exit();
             } else{
                 echo "<p>Error: Usuario o contraseña incorrectos.</p>";
             }

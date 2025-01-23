@@ -12,7 +12,7 @@ $conectar = getConexion();
 
 //comprobar que se puede establecer la conexión
 if (!$conectar) {
-    die("Error en la conexión a la base de datos");
+    die("<p class='error'>Error en la conexión a la base de datos</p>");
 }
 
 //comprobar que existe una sesión
@@ -42,31 +42,33 @@ if (!isset($_SESSION['nombre_usuario'])) {
     <h2>Cambiar mis datos</h2>
 
     <!-- Formulario -->
-    <form action="" method="post">
-        <!--Campo para modificar el nombre de usuario -->
-        <label for="newUsername">Nuevo nombre de usuario</label>
-        <input type="text" name="newUsername" placeholder="Escribe tu nuevo nombre de usuario" /> <br /> <br />
+    <main>
+        <form action="" method="post">
+            <!--Campo para modificar el nombre de usuario -->
+            <label for="newUsername">Nuevo nombre de usuario: </label>
+            <input type="text" name="newUsername" placeholder="Escribe tu nuevo nombre de usuario" /> <br /> <br />
 
-        <!--Campo para modificar el correo del usuario -->
-        <label for="newEmail">Nuevo correo: </label>
-        <input type="email" name="newEmail" placeholder="Escribe otra dirección de correo" /> <br /> <br />
+            <!--Campo para modificar el correo del usuario -->
+            <label for="newEmail">Nuevo correo: </label>
+            <input type="email" name="newEmail" placeholder="Escribe otra dirección de correo" /> <br /> <br />
 
-        <!--Campo para modificar la contraseña -->
-        <label for="oldPassword">Tu actual contraseña: </label>
-        <input type="password" name="oldPassword" placeholder="Tu contraseña actual" /> <br />
-        <label for="newPassword">Nueva contraseña: </label>
-        <input type="password" name="newPassword" placeholder="Escribe tu nueva contraseña" /> <br />
-        <label for="newPasswordCheck">Repite la nueva contraseña: </label>
-        <input type="password" name="newPasswordCheck" /> <br />
+            <!--Campo para modificar la contraseña -->
+            <label for="oldPassword">Tu actual contraseña: </label>
+            <input type="password" name="oldPassword" placeholder="Tu contraseña actual" /> <br />
+            <label for="newPassword">Nueva contraseña: </label>
+            <input type="password" name="newPassword" placeholder="Escribe tu nueva contraseña" /> <br />
+            <label for="newPasswordCheck">Repite la nueva contraseña: </label>
+            <input type="password" name="newPasswordCheck" /> <br />
 
-        <!--Botón para enviar el formulario-->
-        <button type="submit">Modificar datos</button>
+            <!--Botón para enviar el formulario-->
+            <button type="submit">Modificar datos</button>
 
-        <!--Enlace al inico de sesión-->
-        <section>
-            <a href="./principal.php">Volver atrás</a>
-        </section>
-    </form>
+            <!--Enlace al inico de sesión-->
+            <section>
+                <a href="./principal.php">Volver atrás</a>
+            </section>
+        </form>
+    </main>
 </body>
 
 </html>
@@ -108,7 +110,7 @@ if ($nombre_usuario) {
             } catch (mysqli_sql_exception $e) {
                 //cerrar la conexión
                 $conectar->close();
-                die("Error actualizando el correo electrónico: " . $e->getMessage());
+                die("<p class='error'>Error actualizando el correo electrónico: " . $e->getMessage() . "</p>");
             }
         }
 
@@ -128,7 +130,7 @@ if ($nombre_usuario) {
             if ($usuario) {
                 // comprobar la contraseña
                 $hashedPassword = hash('sha256', $claveActual . $usuario['salt']);
-                
+
                 if ($hashedPassword === $usuario['contrasena']) {
                     if ($nuevaClave === $nuevaClaveComprobar) {
                         // Consulta para actualizar la contraseña
@@ -139,13 +141,13 @@ if ($nombre_usuario) {
                         $prepararConsulta->bind_param("sii", $nuevoHashedPassword, $salt, $idUsuario); // blindar los parámetros
                         $prepararConsulta->execute(); // ejecutar la consulta
                     } else {
-                        die("Las nuevas contraseñas no coinciden");
+                        die("<p class='error'>Las nuevas contraseñas no coinciden</p>");
                     }
                 } else {
-                    die("Has introducido mal tu antigua contraseña.");
+                    die("<p class='error'>Has introducido mal tu antigua contraseña.</p>");
                 }
             } else {
-                die("El usuario no existe o ha ocurrido un error.");
+                die("<p class='error'>El usuario no existe o ha ocurrido un error.</p>");
             }
 
         }
@@ -162,7 +164,7 @@ if ($nombre_usuario) {
             } catch (mysqli_sql_exception $e) {
                 //cerrar la conexión
                 $conectar->close();
-                die("Error actualizando el nombre de usuario: " . $e->getMessage());
+                die("<p class='error'>Error actualizando el nombre de usuario: " . $e->getMessage() . "</p>");
             }
         }
 

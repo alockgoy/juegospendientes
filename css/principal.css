@@ -93,3 +93,8 @@ img{
     color: white;
 }
 
+#modificar:hover{
+    background-color: orange;
+    color: white;
+}
+

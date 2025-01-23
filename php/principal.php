@@ -53,7 +53,7 @@ if (!isset($_SESSION['nombre_usuario'])) {
 
             <section>
                 <?php
-                    //echo "<a href='./borrarJuego.php?nombre_usuario=" . $_SESSION['nombre_usuario'] . "'>Borrar cuenta</a>";
+                    echo "<a href='./borrarUsuario.php?nombre_usuario=" . $_SESSION['nombre_usuario'] . "' onclick='return confirmarEliminacion()'>Borrar cuenta</a>";
                 ?>
             </section>
         </nav>
@@ -65,7 +65,7 @@ if (!isset($_SESSION['nombre_usuario'])) {
             <!-- Código PHP -->
             <?php
             //la consulta esa del demonio
-            $consultaJuegoPorUsuario = "SELECT juego.poster, juego.nombre, juego.puntuacion_metacritic, juego.duracion_horas, juego.indicador 
+            $consultaJuegoPorUsuario = "SELECT juego.id, juego.poster, juego.nombre, juego.puntuacion_metacritic, juego.duracion_horas, juego.indicador 
             FROM Juegos as juego 
             INNER JOIN Anade as vincula ON vincula.id_juego = juego.id 
             INNER JOIN Usuarios as usuario ON vincula.nombre_usuario = usuario.nombre_usuario 
@@ -103,7 +103,7 @@ if (!isset($_SESSION['nombre_usuario'])) {
                         echo '<div class="texto">Duración: ' . htmlspecialchars($fila['duracion_horas']) . '</div>';
                         echo '<div class="texto indicador"> Indicador: ' . htmlspecialchars($fila['indicador']) . '</div>';
                         echo '<br/>';
-                        echo '<a href="" onclick="return confirmarEliminacion()">Borrar juego</a>';
+                        echo "<a href='./borrarJuego.php?id_juego=" . htmlspecialchars($fila['id']) . "' onclick='return confirmarEliminacion()'>Borrar juego</a>";
                     }
                 } else {
                     echo "<p><strong>No hay datos disponibles</strong></p>";

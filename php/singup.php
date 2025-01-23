@@ -29,6 +29,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         die("El nombre de usuario ya existe.");
     }
 
+    //comprobar que el correo electrónico no se repite
+    $consultaBuscaCorreo = "SELECT email FROM Usuarios WHERE email = ?;";
+    $prepararConsulta = $conectar->prepare($consultaBuscaCorreo); //preparar la consulta
+    $prepararConsulta->bind_param("s", $correoUsuario); //blindar el parámetro
+    $prepararConsulta->execute(); //ejecutar la consulta
+    $resultado = $prepararConsulta->get_result(); //obtener el resultado
+    if ($resultado->num_rows > 0) {
+        die("El correo introducido ya existe.");
+    }
+
     //comprobar que no se ha mandado el formulario con algún campo vacío
     if (empty($nombreUsuario) || empty($correoUsuario) || empty($claveUsuario)) {
         die("No puede haber campos vacíos.");
@@ -61,3 +71,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/errores.css">
+    <title></title>
+</head>
+<body>
+    
+</body>
+</html>

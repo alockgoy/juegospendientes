@@ -66,8 +66,6 @@ if (!isset($_SESSION['nombre_usuario'])) {
     </header>
 
     <main>
-        <!--Abrir la tabla de los jueguitos-->
-        <div class="contenedor">
             <!-- Código PHP -->
             <?php
             //la consulta esa del demonio
@@ -93,6 +91,9 @@ if (!isset($_SESSION['nombre_usuario'])) {
                 if ($resultado->num_rows > 0) {
                     //obtener datos
                     while ($fila = $resultado->fetch_assoc()) {
+                        //abrir el div
+                        echo '<div class="contenedor">';
+
                         //depuración para mostrar el poster
                         $rutaPoster = "../img/avatares_juegos/" . htmlspecialchars($fila['poster']);
 
@@ -110,6 +111,9 @@ if (!isset($_SESSION['nombre_usuario'])) {
                         echo '<div class="texto indicador"> Indicador: ' . htmlspecialchars($fila['indicador']) . '</div>';
                         echo '<br/>';
                         echo "<a href='./borrarJuego.php?id_juego=" . htmlspecialchars($fila['id']) . "' onclick='return confirmarEliminacion()'>Borrar juego</a>";
+                    
+                        //cerrar el div
+                        echo "</div>";
                     }
                 } else {
                     echo "<p><strong>No hay datos disponibles</strong></p>";
@@ -124,7 +128,6 @@ if (!isset($_SESSION['nombre_usuario'])) {
                 die("Error generando la tabla: " . $e->getMessage());
             }
             ?>
-        </div>
     </main>
 
     <script src="../js/app.js"></script>

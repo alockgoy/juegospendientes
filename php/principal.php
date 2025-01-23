@@ -53,7 +53,13 @@ if (!isset($_SESSION['nombre_usuario'])) {
 
             <section>
                 <?php
-                    echo "<a href='./borrarUsuario.php?nombre_usuario=" . $_SESSION['nombre_usuario'] . "' onclick='return confirmarEliminacion()'>Borrar cuenta</a>";
+                    echo "<a href='./borrarUsuario.php?nombre_usuario=" . $_SESSION['nombre_usuario'] . "' id='borrar' onclick='return confirmarEliminacion()'>Borrar cuenta</a>";
+                ?>
+            </section>
+
+            <section>
+                <?php 
+                    echo "<a href='./modificarUsuario.php?nombre_usuario=" . $_SESSION['nombre_usuario'] . "'>Modificar cuenta</a>";
                 ?>
             </section>
         </nav>

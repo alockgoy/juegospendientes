@@ -83,4 +83,7 @@ img{
     border-radius: 5px;
 }
 
+#borrar:hover{
+    background-color: red;
+}
 

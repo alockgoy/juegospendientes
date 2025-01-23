@@ -34,6 +34,7 @@ if (!isset($_SESSION['nombre_usuario'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/modificar.css" />
     <title>Modificar mis datos</title>
 </head>
 
@@ -86,31 +87,23 @@ if ($nombre_usuario) {
         $nuevaClave = $_POST['newPassword'];
         $nuevaClaveComprobar = $_POST['newPasswordCheck'];
 
+        //obtener el id del usuario
+        $consultaObtenerIdUsuario = "SELECT id_usuario FROM Usuarios WHERE nombre_usuario = ?;";
+        $prepararConsultaUsuario = $conectar->prepare($consultaObtenerIdUsuario);
+        $prepararConsultaUsuario->bind_param("s", $_SESSION['nombre_usuario']);
+        $prepararConsultaUsuario->execute();
+        $resultado = $prepararConsultaUsuario->get_result();
+        $idUsuario = $resultado->fetch_assoc()['id_usuario'];
+
         /* Lo voy a hacer caso por caso porque vaya lío */
-
-        //caso del nombre de usuario
-        if (!empty($nuevoNombreUsuario)) {
-            try {
-                //si el nombre de usuario se repite, saltará la excepción
-                $sqlActualizarNombre = "UPDATE Usuarios SET nombre_usuario = ? WHERE nombre_usuario = ?;";
-                $prepararConsulta = $conectar->prepare($sqlActualizarNombre); //preparar la consulta
-                $prepararConsulta->bind_param("ss", $nuevoNombreUsuario, $nombre_usuario); //blindar los parámetros
-                $prepararConsulta->execute(); //ejecutar la consulta
-
-            } catch (mysqli_sql_exception $e) {
-                //cerrar la conexión
-                $conectar->close();
-                die("Error actualizando el nombre de usuario: " . $e->getMessage());
-            }
-        }
 
         //caso del correo electrónico
         if (!empty($nuevoCorreoUsuario)) {
             try {
                 //si el correo se repite, saltará la excepción
-                $sqlActualizarCorreo = "UPDATE Usuarios SET email = ? WHERE nombre_usuario = ?;";
+                $sqlActualizarCorreo = "UPDATE Usuarios SET email = ? WHERE id_usuario = ?;";
                 $prepararConsulta = $conectar->prepare($sqlActualizarCorreo); //preparar la consulta
-                $prepararConsulta->bind_param("ss", $nuevoCorreoUsuario, $nombre_usuario); //blindar los parámetros
+                $prepararConsulta->bind_param("si", $nuevoCorreoUsuario, $idUsuario); //blindar los parámetros
                 $prepararConsulta->execute(); //ejecutar la consulta
             } catch (mysqli_sql_exception $e) {
                 //cerrar la conexión
@@ -122,36 +115,64 @@ if ($nombre_usuario) {
         //caso de la contraseña, este va a ser divertido
         if (!empty($nuevaClave) && !empty($nuevaClaveComprobar)) {
             //obtener la antigua contraseña
-            $sqlObtenerClaveAntigua = "SELECT contrasena FROM Usuarios WHERE contrasena = ?;";
-            $prepararConsulta = $conectar->prepare($sqlObtenerClaveAntigua); //preparar la consulta
-            $prepararConsulta->bind_param("s", $claveActual); //blindar los parámetros
-            $prepararConsulta->execute(); //ejecutar la consulta
+            $sqlObtenerClaveAntigua = "SELECT contrasena, salt FROM Usuarios WHERE id_usuario = ?;";
+            $prepararConsulta = $conectar->prepare($sqlObtenerClaveAntigua); // preparar la consulta
+            $prepararConsulta->bind_param("i", $idUsuario); // blindar los parámetros
+            $prepararConsulta->execute(); // ejecutar la consulta
 
             //obtener el resultado
             $resultado = $prepararConsulta->get_result();
+            $usuario = $resultado->fetch_assoc();
 
-            //comprobar que las contraseñas coinciden
-            if ($resultado->num_rows === 1) {
-                //consulta para actualizar la contraseña
-                $sqlActualizarClave = "UPDATE Usuarios SET contrasena = ? WHERE nombre_usuario = ?;";
-                $prepararConsulta = $conectar->prepare($sqlActualizarClave); //preparar la consulta
-                $prepararConsulta->bind_param("ss", $nuevaClave, $nombre_usuario); //blindar los parámetros
-                $prepararConsulta->execute(); //ejecutar la consulta
+            // comprobar si el usuario existe
+            if ($usuario) {
+                // comprobar la contraseña
+                $hashedPassword = hash('sha256', $claveActual . $usuario['salt']);
+                
+                if ($hashedPassword === $usuario['contrasena']) {
+                    if ($nuevaClave === $nuevaClaveComprobar) {
+                        // Consulta para actualizar la contraseña
+                        $salt = rand(-1000000, 1000000);
+                        $nuevoHashedPassword = hash('sha256', $nuevaClave . $salt);
+                        $sqlActualizarClave = "UPDATE Usuarios SET contrasena = ?, salt = ? WHERE id_usuario = ?;";
+                        $prepararConsulta = $conectar->prepare($sqlActualizarClave); // preparar la consulta
+                        $prepararConsulta->bind_param("sii", $nuevoHashedPassword, $salt, $idUsuario); // blindar los parámetros
+                        $prepararConsulta->execute(); // ejecutar la consulta
+                    } else {
+                        die("Las nuevas contraseñas no coinciden");
+                    }
+                } else {
+                    die("Has introducido mal tu antigua contraseña.");
+                }
             } else {
-                throw new Exception("Has introducido mal tu antigua contraseña.");
+                die("El usuario no existe o ha ocurrido un error.");
             }
 
-        } else {
-            throw new Exception("Los campos de contraseña no pueden estar vacíos.");
+        }
+
+        //caso del nombre de usuario
+        if (!empty($nuevoNombreUsuario)) {
+            try {
+                //si el nombre de usuario se repite, saltará la excepción
+                $sqlActualizarNombre = "UPDATE Usuarios SET nombre_usuario = ? WHERE id_usuario = ?;";
+                $prepararConsulta = $conectar->prepare($sqlActualizarNombre); //preparar la consulta
+                $prepararConsulta->bind_param("si", $nuevoNombreUsuario, $idUsuario); //blindar los parámetros
+                $prepararConsulta->execute(); //ejecutar la consulta
+
+            } catch (mysqli_sql_exception $e) {
+                //cerrar la conexión
+                $conectar->close();
+                die("Error actualizando el nombre de usuario: " . $e->getMessage());
+            }
         }
 
 
         $conectar->close();
         header("Location: ./logout.php");
-    } else {
-        echo "<p><strong>Se ha producido un error</strong></p>";
-        exit();
     }
 
+} else {
+    echo "<p><strong>Se ha producido un error</strong></p>";
+    exit();
 }
 ?>

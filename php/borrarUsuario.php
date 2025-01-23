@@ -37,10 +37,19 @@ if ($nombre_usuario) {
     */
 
     try {
+        //obtener el id del usuario
+        $consultaObtenerIdUsuario = "SELECT id_usuario FROM Usuarios WHERE nombre_usuario = ?;";
+        $prepararConsultaUsuario = $conectar->prepare($consultaObtenerIdUsuario);
+        $prepararConsultaUsuario->bind_param("s", $_SESSION['nombre_usuario']);
+        $prepararConsultaUsuario->execute();
+        $resultado = $prepararConsultaUsuario->get_result();
+        $idUsuario = $resultado->fetch_assoc()['id_usuario'];
+
+
         //eliminar los registros de la tabla 'Anade' asociados con el usuario
-        $sqlBorrarAnade = "DELETE FROM Anade WHERE nombre_usuario = ?";
+        $sqlBorrarAnade = "DELETE FROM Anade WHERE id_usuario = ?";
         $stmt = $conectar->prepare($sqlBorrarAnade);
-        $stmt->bind_param("s", $nombre_usuario);
+        $stmt->bind_param("i", $idUsuario);
         $stmt->execute();
         $stmt->close();
 

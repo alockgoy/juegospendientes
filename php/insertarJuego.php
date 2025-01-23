@@ -88,10 +88,18 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         // Obtener el ID del juego recién insertado
         $idJuego = $conectar->insert_id;
 
+        //obtener el id del usuario
+        $consultaObtenerIdUsuario = "SELECT id_usuario FROM Usuarios WHERE nombre_usuario = ?;";
+        $prepararConsultaUsuario = $conectar->prepare($consultaObtenerIdUsuario);
+        $prepararConsultaUsuario->bind_param("s", $_SESSION['nombre_usuario']);
+        $prepararConsultaUsuario->execute();
+        $resultado = $prepararConsultaUsuario->get_result();
+        $idUsuario = $resultado->fetch_assoc()['id_usuario'];
+
         // Insertar en la tabla 'Anade'
-        $consultaInsertarAnade = "INSERT INTO Anade (id_juego, nombre_usuario) VALUES (?, ?);";
+        $consultaInsertarAnade = "INSERT INTO Anade (id_juego, id_usuario) VALUES (?, ?);";
         $prepararConsultaAnade = $conectar->prepare($consultaInsertarAnade);
-        $prepararConsultaAnade->bind_param("is", $idJuego, $_SESSION['nombre_usuario']);
+        $prepararConsultaAnade->bind_param("ii", $idJuego, $idUsuario);
         $prepararConsultaAnade->execute();
 
 

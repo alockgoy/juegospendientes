@@ -44,7 +44,7 @@ if (!isset($_SESSION['nombre_usuario'])) {
 
         <nav>
             <section>
-                <a href="../html/insertarJuego.html">Añadir un juego</a>
+                <a href="../html/insertarJuego.html" class="anade">Añadir un juego</a>
             </section>
 
             <section>
@@ -74,7 +74,7 @@ if (!isset($_SESSION['nombre_usuario'])) {
             $consultaJuegoPorUsuario = "SELECT juego.id, juego.poster, juego.nombre, juego.puntuacion_metacritic, juego.duracion_horas, juego.indicador 
             FROM Juegos as juego 
             INNER JOIN Anade as vincula ON vincula.id_juego = juego.id 
-            INNER JOIN Usuarios as usuario ON vincula.nombre_usuario = usuario.nombre_usuario 
+            INNER JOIN Usuarios as usuario ON vincula.id_usuario = usuario.id_usuario
             WHERE usuario.nombre_usuario = ? ORDER BY juego.indicador DESC; ";
 
             //obtener el nombre de usuario

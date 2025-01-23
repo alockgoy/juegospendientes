@@ -85,5 +85,11 @@ img{
 
 #borrar:hover{
     background-color: red;
+    color: white;
+}
+
+.anade:hover{
+    background-color: green;
+    color: white;
 }
 

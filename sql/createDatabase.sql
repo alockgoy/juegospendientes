@@ -4,7 +4,8 @@ USE JuegosPendientes;
 
 /* Tabla Usuarios */
 CREATE TABLE Usuarios (
-    nombre_usuario VARCHAR(50) PRIMARY KEY,
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_usuario VARCHAR(50),
     email VARCHAR(100) NOT NULL,
     salt VARCHAR(255) NOT NULL,
     contrasena VARCHAR(100) NOT NULL
@@ -23,10 +24,10 @@ CREATE TABLE Juegos(
 /* Tabla intermedia Añade */
 CREATE TABLE Anade (
     id_juego INT,
-    nombre_usuario VARCHAR(50),
-    PRIMARY KEY (id_juego, nombre_usuario),
+    id_usuario INT,
+    PRIMARY KEY (id_juego, id_usuario),
     FOREIGN KEY (id_juego) REFERENCES Juegos(id) ON DELETE CASCADE,
-    FOREIGN KEY (nombre_usuario) REFERENCES Usuarios(nombre_usuario) ON DELETE CASCADE
+    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE
 );
 
 /* Crear un usuario que tenga permisos sobre esta base de datos sin necesidad de tirar de root*/

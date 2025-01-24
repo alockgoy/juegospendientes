@@ -72,6 +72,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         die("La imagen de portada no puede pesar más de 2MB.");
     } elseif (!in_array($_FILES['poster']['type'], ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])) {
         die("El archivo debe ser una imagen (jpeg, png, jpg o webp).");
+    } elseif($puntajeMetacritic < 0 || $puntajeMetacritic > 100){
+        die("La puntuación debe estar entre 0 y 100.");
     }
 
     /* fin comprobaciones (por ahora) */

@@ -5,7 +5,7 @@ USE JuegosPendientes;
 /* Tabla Usuarios */
 CREATE TABLE Usuarios (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_usuario VARCHAR(50),
+    nombre_usuario VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL,
     salt VARCHAR(255) NOT NULL,
     contrasena VARCHAR(100) NOT NULL
@@ -14,9 +14,9 @@ CREATE TABLE Usuarios (
 /* Tabla Juegos */
 CREATE TABLE Juegos(
     id INT AUTO_INCREMENT PRIMARY KEY,
-    poster VARCHAR(255),
+    poster VARCHAR(255) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
-    puntuacion_metacritic DECIMAL(2, 1),
+    puntuacion_metacritic INT NOT NULL,
     duracion_horas INT NOT NULL,
     indicador DECIMAL(5, 2) GENERATED ALWAYS AS (puntuacion_metacritic / duracion_horas) STORED /* puntuacion_metacritic / duracion_horas */
 );

@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/errores.css">
+    <title></title>
+</head>
+<body>
 <?php
 //depuración
 ini_set('display_errors', 1);
@@ -12,6 +21,7 @@ $conectar = getConexion();
 
 //comprobar que se puede establecer la conexión
 if (!$conectar) {
+    echo "<a href='../html/login.html'>Volver atrás</a><br/><br/>";
     die("Error en la conexión a la base de datos");
 }
 
@@ -47,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         // mover el archivo al directorio de poster
         if (!move_uploaded_file($poster_tmp, $rutaPoster)) {
+            echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
             echo "<p>Error al subir el poster.</p>";
             exit();
         }
@@ -54,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         // ruta final para guardar en la base de datos
         $poster = $nombreUnicoArchivo;
     } else {
+        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
         $error = $_FILES['poster']['error'];
         echo "<p>Error: No se ha subido ningún archivo o ha ocurrido un error al subir el archivo. Código de error: $error</p>";
         exit();
@@ -63,16 +75,21 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     //comprobar que no se ha mandado el formulario con algún campo vacío
     if (empty($nombreJuego) || empty($puntajeMetacritic) || empty($longitudJuego) || empty($poster)) {
+        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
         die("No puede haber campos vacíos.");
         //comprobar también que la duración y la puntuación son números
     } elseif (!is_numeric($puntajeMetacritic) || !is_numeric($longitudJuego)) {
+        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
         die("La duración del juego y el puntaje en Metacritic deben ser números.");
         //comprobar también que el poster no pesa más de 2 MB
     } elseif ($_FILES['poster']['size'] > 2 * 1024 * 1024) { // 2MB en bytes
+        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
         die("La imagen de portada no puede pesar más de 2MB.");
     } elseif (!in_array($_FILES['poster']['type'], ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])) {
+        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
         die("El archivo debe ser una imagen (jpeg, png, jpg o webp).");
     } elseif($puntajeMetacritic < 0 || $puntajeMetacritic > 100){
+        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
         die("La puntuación debe estar entre 0 y 100.");
     }
 
@@ -111,6 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         //refirigir a la página principal
         header("Location: ./principal.php");
     } catch (mysqli_sql_exception $e) {
+        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
         //cerrar la conexión
         $conectar->close();
         die("Error añadiendo el juego: " . $e->getMessage());
@@ -118,16 +136,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/errores.css">
-    <title></title>
-</head>
-<body>
     
 </body>
 </html>

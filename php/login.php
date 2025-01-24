@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/errores.css">
+    <title></title>
+</head>
+<body>
 <?php
 //depuración
 ini_set('display_errors', 1);
@@ -12,6 +21,7 @@ $conectar = getConexion();
 
 //comprobar que se puede establecer la conexión
 if (!$conectar) {
+    echo "<a href='../html/login.html'>Volver atrás</a><br/><br/>";
     die("Error en la conexión a la base de datos");
 }
 
@@ -72,13 +82,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 header("Location: ./principal.php");
                 exit();
             } else{
+                echo "<a href='../html/login.html'>Volver atrás</a><br/><br/>";
                 echo "<p>Error: Usuario o contraseña incorrectos.</p>";
             }
         } else{
+            echo "<a href='../html/login.html'>Volver atrás</a><br/><br/>";
             echo "<p>Error: Usuario o contraseña incorrectos.</p>";
         }
 
     } catch (mysqli_sql_exception $e) {
+        echo "<a href='../html/login.html'>Volver atrás</a><br/><br/>";
         //cerrar la conexión
         $conectar->close();
         die("Error al iniciar sesión: " . $e->getMessage());
@@ -87,16 +100,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/errores.css">
-    <title></title>
-</head>
-<body>
     
 </body>
 </html>

@@ -1,3 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/errores.css">
+    <title></title>
+</head>
+<body>
+
 <?php
 //depuración
 ini_set('display_errors', 1);
@@ -12,6 +22,7 @@ $conectar = getConexion();
 
 //comprobar que se puede establecer la conexión
 if (!$conectar) {
+    echo "<a href='../html/login.html'>Volver atrás</a><br/><br/>";
     die("Error en la conexión a la base de datos");
 }
 
@@ -42,12 +53,14 @@ if ($id_juego) {
             header("Location: ./principal.php");
             exit();
         } else {
+            echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
             echo "Error al eliminar el juego: " . $stmt->error;
         }
 
         //cerrar la declaración
         $stmt->close();
     } catch (mysqli_sql_exception $e) {
+        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
         //cerrar la conexión
         $conectar->close();
         die("Error borrando el juego: " . $e->getMessage());
@@ -55,22 +68,13 @@ if ($id_juego) {
 
 
 } else {
+    echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
     echo "<p><strong>Se ha producido un error</strong></p>";
 }
 
 //cerrar la conexión
 $conectar->close();
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/errores.css">
-    <title></title>
-</head>
-<body>
     
 </body>
 </html>

@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/errores.css">
+    <title></title>
+</head>
+<body>
 <?php 
 //depuración
 ini_set('display_errors', 1);
@@ -12,6 +21,7 @@ $conectar = getConexion();
 
 //comprobar que se puede establecer la conexión
 if (!$conectar) {
+    echo "<a href='../html/login.html'>Volver atrás</a><br/><br/>";
     die("Error en la conexión a la base de datos");
 }
 
@@ -70,6 +80,7 @@ if ($nombre_usuario) {
         header("Location: ../index.html");
         exit();
     } catch (mysqli_sql_exception $e) {
+        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
         //cerrar la conexión
         $conectar->close();
         die("Error borrando el usuario: " . $e->getMessage());
@@ -81,16 +92,6 @@ if ($nombre_usuario) {
 }
 
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/errores.css">
-    <title></title>
-</head>
-<body>
     
 </body>
 </html>

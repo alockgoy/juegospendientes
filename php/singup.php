@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/errores.css">
+    <title></title>
+</head>
+<body>
 <?php
 //traer el archivo de conexión
 include_once "./conectar.php";
@@ -7,6 +16,7 @@ $conectar = getConexion();
 
 //comprobar que se puede establecer la conexión
 if (!$conectar) {
+    echo "<a href='../html/singup.html'>Volver atrás</a><br/><br/>";
     die("Error en la conexión a la base de datos");
 }
 
@@ -26,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $prepararConsulta->execute(); //ejecutar la consulta
     $resultado = $prepararConsulta->get_result(); //obtener el resultado
     if ($resultado->num_rows > 0) {
+        echo "<a href='../html/singup.html'>Volver atrás</a><br/><br/>";
         die("El nombre de usuario ya existe.");
     }
 
@@ -36,16 +47,20 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $prepararConsulta->execute(); //ejecutar la consulta
     $resultado = $prepararConsulta->get_result(); //obtener el resultado
     if ($resultado->num_rows > 0) {
+        echo "<a href='../html/singup.html'>Volver atrás</a><br/><br/>";
         die("El correo introducido ya existe.");
     }
 
     //comprobar que no se ha mandado el formulario con algún campo vacío
     if (empty($nombreUsuario) || empty($correoUsuario) || empty($claveUsuario)) {
+        echo "<a href='../html/singup.html'>Volver atrás</a><br/><br/>";
         die("No puede haber campos vacíos.");
         //comprobar también que el nombre de usuario "no es una cosa rara"
     } elseif (!preg_match("/^[a-zA-Z0-9]+$/", $nombreUsuario)) {
+        echo "<a href='../html/singup.html'>Volver atrás</a><br/><br/>";
         die("El nombre de usuario solo puede contener letras y números.");
     } elseif (!filter_var($correoUsuario, FILTER_VALIDATE_EMAIL)) {
+        echo "<a href='../html/singup.html'>Volver atrás</a><br/><br/>";
         die("El correo electrónico no es válido.");
     }
 
@@ -65,22 +80,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $conectar->close();
         header("Location: ../html/login.html");
     } catch (mysqli_sql_exception $e) {
+        echo "<a href='../html/singup.html'>Volver atrás</a><br/><br/>";
         //cerrar la conexión
         $conectar->close();
         die("Error creando al usuario: " . $e->getMessage());
     }
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/errores.css">
-    <title></title>
-</head>
-<body>
     
 </body>
 </html>

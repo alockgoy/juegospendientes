@@ -21,6 +21,12 @@ p {
     text-align: center;
 }
 
+a{
+    padding: 15px;
+    text-align: center;
+    margin: 20px;
+}
+
 strong {
     color: #a94442;
 }

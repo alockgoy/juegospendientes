@@ -26,7 +26,6 @@ if (!isset($_SESSION['nombre_usuario'])) {
 }
 
 ?>
-<!-- Código HTML -->
 <!DOCTYPE html>
 <html lang="es">
 

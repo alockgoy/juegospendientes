@@ -110,6 +110,7 @@
 
 
     } else {
+        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
         echo "<p><strong>Se ha producido un error</strong></p>";
     }
 

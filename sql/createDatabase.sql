@@ -35,6 +35,12 @@ CREATE USER 'usuario_juegos'@'localhost' IDENTIFIED BY 'Franceselquemehackee@123
 GRANT ALL PRIVILEGES ON JuegosPendientes.* TO 'usuario_juegos'@'localhost';
 FLUSH PRIVILEGES;
 
+/* Otra forma de crear el usuario */
+CREATE USER 'usuario_juegos'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'Franceselquemehackee@123';
+GRANT ALL PRIVILEGES ON JuegosPendientes.* TO 'usuario_juegos'@'localhost';
+FLUSH PRIVILEGES;
+
+
 ------------------------------------------------------------------------------------------------------------------
 
 /* Eliminar al usuario (por el motivo que sea) */

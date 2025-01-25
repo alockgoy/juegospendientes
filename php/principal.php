@@ -33,6 +33,11 @@ if (!isset($_SESSION['nombre_usuario'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../css/principal.css" />
+
+    <link rel="icon" href="../img/iconos/icons8-list-16.png" sizes="any" />
+    <link rel="icon" href="../img/iconos/icons8-list-16.png" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="../img/iconos/icons8-list-16.png" />
+
     <title>Tus juegos pendientes</title>
 </head>
 

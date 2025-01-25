@@ -28,19 +28,6 @@ if (!$conectar) {
 //empezar una sesión
 session_start();
 
-//si existe una cookie de sesión, redirigir a principal
-if (isset($_SESSION['nombre_usuario'])) {
-    header("Location: ./principal.php");
-    exit();
-}
-if (isset($_COOKIE['usuario_logueado'])) {
-    // Restaurar sesión desde la cookie
-    $_SESSION['nombre_usuario'] = $_COOKIE['usuario_logueado'];
-    header("Location: ./principal.php");
-    exit();
-}
-
-
 //comprobar que se ha pulsado el botón de envío del formulario de iniciar sesión
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     //asignar los valores introducidos a variables
@@ -70,9 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             //comprobar que la contraseña es correcta
             if ($hashedPassword === $usuario['contrasena']) {
 
-                //guardar la información del usuario en la sesión
+                //guardar la información del usuario en la sesión y en una cookie
                 $_SESSION['nombre_usuario'] = $usuario['nombre_usuario'];
-
                 setcookie('usuario_logueado', $usuario['nombre_usuario'], time() + 3600, "/");
 
                 //cerrar la conexión

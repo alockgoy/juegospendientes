@@ -35,6 +35,11 @@ if (!isset($_SESSION['nombre_usuario'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../css/modificar.css" />
+
+    <link rel="icon" href="../img/iconos/icons8-modify-16.png" sizes="any" />
+    <link rel="icon" href="../img/iconos/icons8-modify-16.png" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="../img/iconos/icons8-modify-16.png" />
+
     <title>Modificar mis datos</title>
 </head>
 
@@ -78,7 +83,8 @@ if (!isset($_SESSION['nombre_usuario'])) {
 //obtener el nombre de usuario desde la URL
 $nombre_usuario = $_GET['nombre_usuario'] ?? null;
 
-if ($nombre_usuario) {
+//comprobar que el nombre del usuario es el de la sesión
+if ($nombre_usuario === $_SESSION['nombre_usuario']) {
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
@@ -90,29 +96,71 @@ if ($nombre_usuario) {
         $nuevaClaveComprobar = $_POST['newPasswordCheck'];
 
         //obtener el id del usuario
-        $consultaObtenerIdUsuario = "SELECT id_usuario FROM Usuarios WHERE nombre_usuario = ?;";
+        $consultaObtenerIdUsuario = "SELECT id_usuario, nombre_usuario, email FROM Usuarios WHERE nombre_usuario = ?;";
         $prepararConsultaUsuario = $conectar->prepare($consultaObtenerIdUsuario);
         $prepararConsultaUsuario->bind_param("s", $_SESSION['nombre_usuario']);
         $prepararConsultaUsuario->execute();
         $resultado = $prepararConsultaUsuario->get_result();
-        $idUsuario = $resultado->fetch_assoc()['id_usuario'];
+        $usuario = $resultado->fetch_assoc();
+        $idUsuario = $usuario['id_usuario'];
+        $nombreUsuarioAntiguo = $usuario['nombre_usuario'];
+        $correoAntiguoUsuario = $usuario['email'];
 
         /* Lo voy a hacer caso por caso porque vaya lío */
 
-        //caso del correo electrónico
-        if (!empty($nuevoCorreoUsuario)) {
-            try {
-                //si el correo se repite, saltará la excepción
-                $sqlActualizarCorreo = "UPDATE Usuarios SET email = ? WHERE id_usuario = ?;";
-                $prepararConsulta = $conectar->prepare($sqlActualizarCorreo); //preparar la consulta
-                $prepararConsulta->bind_param("si", $nuevoCorreoUsuario, $idUsuario); //blindar los parámetros
-                $prepararConsulta->execute(); //ejecutar la consulta
-            } catch (mysqli_sql_exception $e) {
-                //cerrar la conexión
-                $conectar->close();
-                die("<p class='error'>Error actualizando el correo electrónico: " . $e->getMessage() . "</p>");
+        //caso del correo (ahora con verificaciones)
+        if (empty($claveActual)) {
+            die("<p class='error'>No puedes modificar tu correo si no introduces tu contraseña actual.</p>");
+        } else {
+            //obtener la antigua contraseña
+            $sqlObtenerClaveAntigua = "SELECT contrasena, salt FROM Usuarios WHERE id_usuario = ?;";
+            $prepararConsulta = $conectar->prepare($sqlObtenerClaveAntigua); // preparar la consulta
+            $prepararConsulta->bind_param("i", $idUsuario); // blindar los parámetros
+            $prepararConsulta->execute(); // ejecutar la consulta
+
+            //obtener el resultado
+            $resultado = $prepararConsulta->get_result();
+            $usuario = $resultado->fetch_assoc();
+
+            // comprobar la contraseña
+            $hashedPassword = hash('sha256', $claveActual . $usuario['salt']);
+
+            if ($hashedPassword === $usuario['contrasena']) {
+                //caso del correo electrónico
+                if (!empty($nuevoCorreoUsuario)) {
+                    try {
+                        //comprobar que el correo electrónico no se repite
+                        $consultaBuscaCorreo = "SELECT email FROM Usuarios WHERE email = ?;";
+                        $prepararConsulta = $conectar->prepare($consultaBuscaCorreo); //preparar la consulta
+                        $prepararConsulta->bind_param("s", $nuevoCorreoUsuario); //blindar el parámetro
+                        $prepararConsulta->execute(); //ejecutar la consulta
+                        $resultado = $prepararConsulta->get_result(); //obtener el resultado
+                        if ($resultado->num_rows > 0) {
+                            die("<p class='error'>El correo introducido ya existe.</p>");
+                        } else {
+                            //actualizar el correo
+                            $sqlActualizarCorreo = "UPDATE Usuarios SET email = ? WHERE id_usuario = ?;";
+                            $prepararConsulta = $conectar->prepare($sqlActualizarCorreo); //preparar la consulta
+                            $prepararConsulta->bind_param("si", $nuevoCorreoUsuario, $idUsuario); //blindar los parámetros
+                            $prepararConsulta->execute(); //ejecutar la consulta
+                        }
+
+
+                    } catch (mysqli_sql_exception $e) {
+                        //cerrar la conexión
+                        $conectar->close();
+                        die("<p class='error'>Error actualizando el correo electrónico: " . $e->getMessage() . "</p>");
+                    }
+                }
+            } else {
+                die("<p class='error'>Has introducido una contraseña incorrecta.</p>");
             }
+
+
         }
+
+
+
 
         //caso de la contraseña, este va a ser divertido
         if (!empty($nuevaClave) && !empty($nuevaClaveComprobar)) {
@@ -152,29 +200,68 @@ if ($nombre_usuario) {
 
         }
 
-        //caso del nombre de usuario
-        if (!empty($nuevoNombreUsuario)) {
-            try {
-                //si el nombre de usuario se repite, saltará la excepción
-                $sqlActualizarNombre = "UPDATE Usuarios SET nombre_usuario = ? WHERE id_usuario = ?;";
-                $prepararConsulta = $conectar->prepare($sqlActualizarNombre); //preparar la consulta
-                $prepararConsulta->bind_param("si", $nuevoNombreUsuario, $idUsuario); //blindar los parámetros
-                $prepararConsulta->execute(); //ejecutar la consulta
+        //caso del nombre de usuario (ahora con verificaciones)
+        if (empty($claveActual)) {
+            die("<p class='error'>No puedes modificar tu correo si no introduces tu contraseña actual.</p>");
+        } else {
+            //obtener la antigua contraseña
+            $sqlObtenerClaveAntigua = "SELECT contrasena, salt FROM Usuarios WHERE id_usuario = ?;";
+            $prepararConsulta = $conectar->prepare($sqlObtenerClaveAntigua); // preparar la consulta
+            $prepararConsulta->bind_param("i", $idUsuario); // blindar los parámetros
+            $prepararConsulta->execute(); // ejecutar la consulta
 
-            } catch (mysqli_sql_exception $e) {
-                //cerrar la conexión
-                $conectar->close();
-                die("<p class='error'>Error actualizando el nombre de usuario: " . $e->getMessage() . "</p>");
+            //obtener el resultado
+            $resultado = $prepararConsulta->get_result();
+            $usuario = $resultado->fetch_assoc();
+
+            // comprobar la contraseña
+            $hashedPassword = hash('sha256', $claveActual . $usuario['salt']);
+
+            if ($hashedPassword === $usuario['contrasena']) {
+                //caso del nombre de usuario
+                if (!empty($nuevoNombreUsuario)) {
+                    try {
+                        //comprobar que el nombre de usuario no se repite
+                        $consultaBuscaUsuario = "SELECT nombre_usuario FROM Usuarios WHERE nombre_usuario = ?";
+                        $prepararConsulta = $conectar->prepare($consultaBuscaUsuario); //preparar la consulta
+                        $prepararConsulta->bind_param("s", $nuevoNombreUsuario); //blindar el parámetro
+                        $prepararConsulta->execute(); //ejecutar la consulta
+                        $resultado = $prepararConsulta->get_result(); //obtener el resultado
+                        if ($resultado->num_rows > 0) {
+                            die("<p class='error'>El nombre de usuario ya existe.</p>");
+                        } else {
+                            //actualizar el nombre de usuario
+                            $sqlActualizarNombre = "UPDATE Usuarios SET nombre_usuario = ? WHERE id_usuario = ?;";
+                            $prepararConsulta = $conectar->prepare($sqlActualizarNombre); //preparar la consulta
+                            $prepararConsulta->bind_param("si", $nuevoNombreUsuario, $idUsuario); //blindar los parámetros
+                            $prepararConsulta->execute(); //ejecutar la consulta
+                        }
+                    } catch (mysqli_sql_exception $e) {
+                        //cerrar la conexión
+                        $conectar->close();
+                        die("<p class='error'>Error actualizando el nombre de usuario: " . $e->getMessage() . "</p>");
+                    }
+                }
+            } else {
+                die("<p class='error'>Has introducido una contraseña incorrecta.</p>");
             }
+
+
+
+
         }
 
 
+
+
+
         $conectar->close();
-        header("Location: ./logout.php");
+        header("Location: ./principal.php");
     }
 
 } else {
-    echo "<p><strong>Se ha producido un error</strong></p>";
+    //cerrar la sesión si el nombre colocado en la url no es el de la sesión
+    header("Location: ./logout.php");
     exit();
 }
 ?>

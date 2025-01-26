@@ -1,7 +1,5 @@
 **Errores a solucionar**
 
-2. Conectar a la base de datos con el NAS
-3. Crear un usuario en la base de datos con privilegios completos sobre la base de los juegos, y así no depender de root.
-
 5. Crear un método de contacto / recuperación
 6. Añadir el footer en el resto de archivos con vistas
+7. O una de dos: Añadir un aviso de cookies por tema de sesiones / Que le den a las cookies y quitar las que se crean en el logueo

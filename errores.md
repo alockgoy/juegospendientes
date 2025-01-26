@@ -4,3 +4,4 @@
 3. Crear un usuario en la base de datos con privilegios completos sobre la base de los juegos, y así no depender de root.
 
 5. Crear un método de contacto / recuperación
+6. Añadir el footer en el resto de archivos con vistas

@@ -50,6 +50,7 @@ nav a {
 }
 
 nav a:hover {
+  color: green;
   text-decoration: underline;
 }
 
@@ -85,4 +86,9 @@ footer {
 
 footer a:visited{
   color: blue;
+}
+
+#notWorking:hover{
+  
+  color: red;
 }

@@ -20,6 +20,9 @@ if (!$conectar) {
     die("Error en la conexión a la base de datos");
 }
 
+//empezar una sesión
+session_start();
+
 //comprobar que se ha pulsado el botón de envío del formulario de crear cuenta
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     //asignar los valores introducidos a variables
@@ -76,9 +79,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $prepararConsultaInsercion = $conectar->prepare($consultaInsertarUsuario); //preparar la sentencia
         $prepararConsultaInsercion->bind_param("ssis", $nombreUsuario, $correoUsuario, $salt ,$hashPassword); //blindar los parámetros
         $prepararConsultaInsercion->execute(); //ejecutar la consulta
+        $_SESSION['nombre_usuario'] = $nombreUsuario; //guardar la información de la sesión
         //cerrar la conexión
         $conectar->close();
-        header("Location: ../html/login.html");
+        header("Location: ./principal.php");
     } catch (mysqli_sql_exception $e) {
         echo "<a href='../html/singup.html'>Volver atrás</a><br/><br/>";
         //cerrar la conexión

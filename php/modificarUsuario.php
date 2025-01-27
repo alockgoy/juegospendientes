@@ -50,17 +50,17 @@ if (!isset($_SESSION['nombre_usuario'])) {
     <main>
         <form action="" method="post">
             <!--Campo para modificar el nombre de usuario -->
-            <label for="newUsername">Nuevo nombre de usuario: </label>
+            <label for="newUsername">Nuevo nombre de usuario (opcional): </label>
             <input type="text" name="newUsername" placeholder="Escribe tu nuevo nombre de usuario" /> <br /> <br />
 
             <!--Campo para modificar el correo del usuario -->
-            <label for="newEmail">Nuevo correo: </label>
+            <label for="newEmail">Nuevo correo (opcional): </label>
             <input type="email" name="newEmail" placeholder="Escribe otra dirección de correo" /> <br /> <br />
 
             <!--Campo para modificar la contraseña -->
             <label for="oldPassword">Tu actual contraseña: </label>
-            <input type="password" name="oldPassword" placeholder="Tu contraseña actual" /> <br />
-            <label for="newPassword">Nueva contraseña: </label>
+            <input type="password" name="oldPassword" placeholder="Obligatorio SOLO si vas a cambiar algo" /> <br />
+            <label for="newPassword">Nueva contraseña (opcional): </label>
             <input type="password" name="newPassword" placeholder="Escribe tu nueva contraseña" /> <br />
             <label for="newPasswordCheck">Repite la nueva contraseña: </label>
             <input type="password" name="newPasswordCheck" /> <br />
@@ -74,6 +74,11 @@ if (!isset($_SESSION['nombre_usuario'])) {
             </section>
         </form>
     </main>
+
+    <footer>
+        &copy; 2025 Creada por Alonso (<a href="https://github.com/alockgoy/juegospendientes"
+            target="_blank">@alockgoy</a> en redes sociales).
+    </footer>
 </body>
 
 </html>

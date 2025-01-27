@@ -57,87 +57,88 @@ if (!isset($_SESSION['nombre_usuario'])) {
 
             <section>
                 <?php
-                    echo "<a href='./borrarUsuario.php?nombre_usuario=" . $_SESSION['nombre_usuario'] . "' id='borrar' onclick='return confirmarEliminacion()'>Borrar cuenta</a>";
+                echo "<a href='./borrarUsuario.php?nombre_usuario=" . $_SESSION['nombre_usuario'] . "' id='borrar' onclick='return confirmarEliminacion()'>Borrar cuenta</a>";
                 ?>
             </section>
 
             <section>
-                <?php 
-                    echo "<a href='./modificarUsuario.php?nombre_usuario=" . $_SESSION['nombre_usuario'] . "' id='modificar'>Modificar cuenta</a>";
+                <?php
+                echo "<a href='./modificarUsuario.php?nombre_usuario=" . $_SESSION['nombre_usuario'] . "' id='modificar'>Modificar cuenta</a>";
                 ?>
             </section>
         </nav>
     </header>
 
     <main>
-            <!-- Código PHP -->
-            <?php
-            //la consulta esa del demonio
-            $consultaJuegoPorUsuario = "SELECT juego.id, juego.poster, juego.nombre, juego.puntuacion_metacritic, juego.duracion_horas, juego.indicador 
+        <!-- Código PHP -->
+        <?php
+        //la consulta esa del demonio
+        $consultaJuegoPorUsuario = "SELECT juego.id, juego.poster, juego.nombre, juego.puntuacion_metacritic, juego.duracion_horas, juego.indicador 
             FROM Juegos as juego 
             INNER JOIN Anade as vincula ON vincula.id_juego = juego.id 
             INNER JOIN Usuarios as usuario ON vincula.id_usuario = usuario.id_usuario
             WHERE usuario.nombre_usuario = ? ORDER BY juego.indicador DESC; ";
 
-            //obtener el nombre de usuario
-            $nombreUsuario = $_SESSION['nombre_usuario'];
+        //obtener el nombre de usuario
+        $nombreUsuario = $_SESSION['nombre_usuario'];
 
-            try {
-                //preparar la consulta
-                $prepararConsulta = $conectar->prepare($consultaJuegoPorUsuario);
-                $prepararConsulta->bind_param("s", $nombreUsuario); //blindar la consulta
-                $prepararConsulta->execute(); //ejecutar la consulta
-            
-                //obtener el resultado
-                $resultado = $prepararConsulta->get_result();
+        try {
+            //preparar la consulta
+            $prepararConsulta = $conectar->prepare($consultaJuegoPorUsuario);
+            $prepararConsulta->bind_param("s", $nombreUsuario); //blindar la consulta
+            $prepararConsulta->execute(); //ejecutar la consulta
+        
+            //obtener el resultado
+            $resultado = $prepararConsulta->get_result();
 
-                //comprobar que hay al menos 1 resultado
-                if ($resultado->num_rows > 0) {
-                    //obtener datos
-                    while ($fila = $resultado->fetch_assoc()) {
-                        //abrir el div
-                        echo '<div class="contenedor">';
+            //comprobar que hay al menos 1 resultado
+            if ($resultado->num_rows > 0) {
+                //obtener datos
+                while ($fila = $resultado->fetch_assoc()) {
+                    //abrir el div
+                    echo '<div class="contenedor">';
 
-                        //depuración para mostrar el poster
-                        $rutaPoster = "../img/avatares_juegos/" . htmlspecialchars($fila['poster']);
+                    //depuración para mostrar el poster
+                    $rutaPoster = "../img/avatares_juegos/" . htmlspecialchars($fila['poster']);
 
-                        // Verificar si el poster existe antes de mostrarlo
-                        if (file_exists($rutaPoster)) {
-                            echo '<div class="imagen"><img src="' . $rutaPoster . '" alt="Poster del juego"></div>';
-                        } else {
-                            echo '<div class="imagen"><p>Imagen no disponible</p></div>';
-                        }
-
-                        // Mostrar otros datos
-                        echo '<div class="texto"> Nombre: ' . htmlspecialchars($fila['nombre']) . '</div>';
-                        echo '<div class="texto">Puntuación en Metacritic: ' . htmlspecialchars($fila['puntuacion_metacritic']) . '</div>';
-                        echo '<div class="texto">Duración: ' . htmlspecialchars($fila['duracion_horas']) . '</div>';
-                        echo '<div class="texto indicador"> Indicador: ' . htmlspecialchars($fila['indicador']) . '</div>';
-                        echo '<br/>';
-                        echo "<a href='./borrarJuego.php?id_juego=" . htmlspecialchars($fila['id']) . "' onclick='return confirmarEliminacion()'>Borrar juego</a>";
-                    
-                        //cerrar el div
-                        echo "</div>";
+                    // Verificar si el poster existe antes de mostrarlo
+                    if (file_exists($rutaPoster)) {
+                        echo '<div class="imagen"><img src="' . $rutaPoster . '" alt="Poster del juego"></div>';
+                    } else {
+                        echo '<div class="imagen"><p>Imagen no disponible</p></div>';
                     }
-                } else {
-                    echo "<p><strong>No hay datos disponibles</strong></p>";
+
+                    // Mostrar otros datos
+                    echo '<div class="texto"> Nombre: ' . htmlspecialchars($fila['nombre']) . '</div>';
+                    echo '<div class="texto">Puntuación en Metacritic: ' . htmlspecialchars($fila['puntuacion_metacritic']) . '</div>';
+                    echo '<div class="texto">Duración: ' . htmlspecialchars($fila['duracion_horas']) . '</div>';
+                    echo '<div class="texto indicador"> Indicador: ' . htmlspecialchars($fila['indicador']) . '</div>';
+                    echo '<br/>';
+                    echo "<a href='./borrarJuego.php?id_juego=" . htmlspecialchars($fila['id']) . "' onclick='return confirmarEliminacion()'>Borrar juego</a>";
+
+                    //cerrar el div
+                    echo "</div>";
                 }
-
-                //cerrar la conexión
-                $conectar->close();
-
-            } catch (mysqli_sql_exception $e) {
-                //cerrar la conexión
-                $conectar->close();
-                die("Error generando la tabla: " . $e->getMessage());
+            } else {
+                echo "<p><strong>No hay datos disponibles</strong></p>";
             }
-            ?>
+
+            //cerrar la conexión
+            $conectar->close();
+
+        } catch (mysqli_sql_exception $e) {
+            //cerrar la conexión
+            $conectar->close();
+            die("Error generando la tabla: " . $e->getMessage());
+        }
+        ?>
     </main>
 
     <script src="../js/app.js"></script>
 
     <footer>
-
+        &copy; 2025 Creada por Alonso (<a href="https://github.com/alockgoy/juegospendientes"
+            target="_blank">@alockgoy</a> en redes sociales).
     </footer>
 
 </body>

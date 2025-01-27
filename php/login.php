@@ -57,9 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             //comprobar que la contraseña es correcta
             if ($hashedPassword === $usuario['contrasena']) {
 
-                //guardar la información del usuario en la sesión y en una cookie
+                //guardar la información del usuario en la sesión
                 $_SESSION['nombre_usuario'] = $usuario['nombre_usuario'];
-                setcookie('usuario_logueado', $usuario['nombre_usuario'], time() + 3600, "/");
 
                 //cerrar la conexión
                 $conectar->close();

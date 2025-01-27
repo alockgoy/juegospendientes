@@ -82,3 +82,7 @@ footer {
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Añade un poco de separación visual */
   margin-top: 20px; /* Da un poco de espacio entre el main y el footer */
 }
+
+footer a:visited{
+  color: blue;
+}

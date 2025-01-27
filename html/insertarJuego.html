@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
 
     <title>Añadir un juego</title>
 </head>
+
 <body>
     <header>
         <h2>Añadir un juego</h2>
@@ -21,19 +23,22 @@
         <form action="../php/insertarJuego.php" method="post" enctype="multipart/form-data">
             <!--Campo del poster-->
             <label for="poster">Imagen de portada: </label>
-            <input type="file" name="poster" accept="image/*" required /> <br/><br/>
+            <input type="file" name="poster" accept="image/*" required /> <br /><br />
 
             <!--Campo del nombre-->
             <label for="nombreJuego">Nombre del juego: </label>
-            <input type="text" name="nombreJuego" placeholder="Escribe el nombre del juego" required /> <br/><br/>
+            <input type="text" name="nombreJuego" placeholder="Escribe el nombre del juego" required /> <br /><br />
 
             <!--Campo de la puntuación en metacritic-->
             <label for="puntajeMetacritic">Puntuación en MetaCritic: </label>
-            <input type="number" name="puntajeMetacritic" placeholder="La puntuación de los usuarios, los críticos no sirven." required /> <br/><br/> <!--Espero que no me funen por ese placeholder-->
+            <input type="number" name="puntajeMetacritic"
+                placeholder="La puntuación de los usuarios, los críticos no sirven." required /> <br /><br />
+            <!--Espero que no me funen por ese placeholder-->
 
             <!--Campo de la duración en horas-->
             <label for="duracionHoras">Duración del juego: </label>
-            <input type="number" name="duracionHoras" placeholder="En HORAS, si no llega a la hora escribe 1." required/> <br/>
+            <input type="number" name="duracionHoras" placeholder="En HORAS, si no llega a la hora escribe 1."
+                required /> <br />
 
             <!--Botón para enviar el formulario-->
             <button type="submit">Añadir juego</button>
@@ -47,7 +52,9 @@
     </main>
 
     <footer>
-
+        &copy; 2025 Creada por Alonso (<a href="https://github.com/alockgoy/juegospendientes"
+            target="_blank">@alockgoy</a> en redes sociales).
     </footer>
 </body>
+
 </html>

@@ -38,13 +38,13 @@ if (!isset($_SESSION['nombre_usuario'])) {
     <link rel="icon" href="../img/iconos/icons8-list-16.png" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="../img/iconos/icons8-list-16.png" />
 
-    <title>Juegos pendientes de: <?php echo $_SESSION['nombre_usuario']; ?></title>
+    <title>Lista pendientes</title>
 </head>
 
 <body>
 
     <header>
-        <h2>Tu lista de pendientes</h2>
+        <h2>Juegos pendientes de: <?php echo $_SESSION['nombre_usuario']; ?></h2>
 
         <nav>
             <section>

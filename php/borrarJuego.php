@@ -38,8 +38,52 @@
         exit();
     }
 
+    // obtener el nombre del usuario de la sesión
+    $nombre_usuario = $_SESSION['nombre_usuario'];
+
     //obtener el ID del juego desde la URL
     $id_juego = $_GET['id_juego'] ?? null;
+
+    /* Comprobaciones */
+
+    //obtener el ID del usuario a partir de su nombre
+    try {
+        $consultaUsuario = "SELECT id_usuario FROM Usuarios WHERE nombre_usuario = ?;";
+        $stmtUsuario = $conectar->prepare($consultaUsuario);
+        $stmtUsuario->bind_param("s", $nombre_usuario);
+        $stmtUsuario->execute();
+        $stmtUsuario->bind_result($id_usuario);
+        $stmtUsuario->fetch();
+        $stmtUsuario->close();
+
+        // Si no se encuentra el usuario, redirigir al login
+        if (!$id_usuario) {
+            header("Location: ../html/login.html");
+            exit();
+        }
+    } catch (mysqli_sql_exception $e) {
+        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
+        die("Error obteniendo ID del usuario: " . $e->getMessage());
+    }
+
+    //comprobar que el id del juego está vinculado al ID del usuario
+    try {
+        $comprobarUsuario = "SELECT * FROM `Anade` WHERE id_usuario = ? AND id_juego = ?;";
+        $prepararConsulta = $conectar->prepare($comprobarUsuario);
+        $prepararConsulta->bind_param("ii", $id_usuario, $id_juego);
+        $prepararConsulta->execute();
+        
+        $resultado = $prepararConsulta->get_result();
+        if ($resultado->num_rows === 0) {
+            header("Location: https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+            exit();
+        }
+    } catch (mysqli_sql_exception $e) {
+        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
+        die("Error verificando la propiedad del juego: " . $e->getMessage());
+    }
+
+    /* Fin de las comprobaciones, por ahora */
 
     if ($id_juego) {
 

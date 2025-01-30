@@ -86,11 +86,11 @@
             $stmt->execute();
             $stmt->close();
 
-            /*eliminar los juegos (en principio esta consulta ya no es necesaria)
+            //eliminar los juegos (en principio esta consulta ya no es necesaria)
             $sqlBorrarJuegos = "DELETE FROM Juegos WHERE id NOT IN (SELECT id_juego FROM Anade)";
             $stmt = $conectar->prepare($sqlBorrarJuegos);
             $stmt->execute();
-            $stmt->close();*/
+            $stmt->close();
 
             //eliminar el usuario
             $sqlBorrarUsuario = "DELETE FROM Usuarios WHERE nombre_usuario = ?";

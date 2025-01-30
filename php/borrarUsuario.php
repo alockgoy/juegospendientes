@@ -40,7 +40,8 @@
     //obtener el nombre de usuario desde la URL
     $nombre_usuario = $_GET['nombre_usuario'] ?? null;
 
-    if ($nombre_usuario) {
+    //comprobar que el nombre de usuario a borrar es el mismo de la sesión
+    if ($nombre_usuario === $_SESSION['nombre_usuario']) {
 
         /* Esto es un poco más complejo
         Hay que eliminar los juegos añadidos por el usuario
@@ -110,8 +111,8 @@
 
 
     } else {
-        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
-        echo "<p><strong>Se ha producido un error</strong></p>";
+        header("Location: https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+        exit();
     }
 
     ?>

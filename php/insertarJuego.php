@@ -51,6 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             mkdir($directorioPoster, 0755, true);
         }
 
+        // eliminar espacios en blanco en el nombre del archivo del poster
+        $poster = str_replace(' ', '_', $poster);
+
         //crear un nombre único para el poster
         $nombreUnicoArchivo = uniqid("poster_") . "_" . basename($_FILES['poster']['name']);
         $rutaPoster = $directorioPoster . $nombreUnicoArchivo;

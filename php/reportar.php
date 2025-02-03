@@ -55,14 +55,14 @@
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';  // Servidor SMTP de Gmail
             $mail->SMTPAuth = true;
-            $mail->Username = 'tucorreo@gmail.com'; // TU correo de Gmail
-            $mail->Password = 'tu_contraseña_de_aplicación'; // Contraseña de la aplicación generada
+            $mail->Username = 'correo'; // TU correo de Gmail
+            $mail->Password = 'clave especial'; // Contraseña de la aplicación generada
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
             // Configuración del correo
-            $mail->setFrom('correo', 'Soporte'); // De: tu correo de Gmail
-            $mail->addAddress('correo'); // A: el correo de destino
+            $mail->setFrom($correoUsuario, 'Usuario'); // De: el correo del usuario que reporta
+            $mail->addAddress('destinatario'); // A: el correo de destino
             $mail->addReplyTo($correoUsuario); // Opción de responder al correo del usuario
     
             // Contenido del correo

@@ -42,6 +42,30 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $puntajeMetacritic = $_POST['puntajeMetacritic'];
     $longitudJuego = $_POST['duracionHoras'];
 
+    /* Comprobaciones */
+
+    //comprobar que no se ha mandado el formulario con algún campo vacío
+    if (empty($nombreJuego) || empty($puntajeMetacritic) || empty($longitudJuego)) {
+        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
+        die("No puede haber campos vacíos.");
+        //comprobar también que la duración y la puntuación son números
+    } elseif (!is_numeric($puntajeMetacritic) || !is_numeric($longitudJuego)) {
+        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
+        die("La duración del juego y el puntaje en Metacritic deben ser números.");
+        //comprobar también que el poster no pesa más de 2 MB
+    } elseif ($_FILES['poster']['size'] > 2 * 1024 * 1024) { // 2MB en bytes
+        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
+        die("La imagen de portada no puede pesar más de 2MB.");
+    } elseif (!in_array($_FILES['poster']['type'], ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])) {
+        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
+        die("El archivo debe ser una imagen (jpeg, png, jpg o webp).");
+    } elseif($puntajeMetacritic < 0 || $puntajeMetacritic > 100){
+        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
+        die("La puntuación debe estar entre 0 y 100.");
+    }
+
+    /* fin comprobaciones (por ahora) */
+
     //procesar el poster
     if (isset($_FILES['poster']) && $_FILES['poster']['error'] == UPLOAD_ERR_OK) {
         $poster = $_FILES['poster']['name'];
@@ -73,30 +97,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         echo "<p>Error: No se ha subido ningún archivo o ha ocurrido un error al subir el archivo. Código de error: $error</p>";
         exit();
     }
-
-    /* Comprobaciones */
-
-    //comprobar que no se ha mandado el formulario con algún campo vacío
-    if (empty($nombreJuego) || empty($puntajeMetacritic) || empty($longitudJuego) || empty($poster)) {
-        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
-        die("No puede haber campos vacíos.");
-        //comprobar también que la duración y la puntuación son números
-    } elseif (!is_numeric($puntajeMetacritic) || !is_numeric($longitudJuego)) {
-        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
-        die("La duración del juego y el puntaje en Metacritic deben ser números.");
-        //comprobar también que el poster no pesa más de 2 MB
-    } elseif ($_FILES['poster']['size'] > 2 * 1024 * 1024) { // 2MB en bytes
-        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
-        die("La imagen de portada no puede pesar más de 2MB.");
-    } elseif (!in_array($_FILES['poster']['type'], ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])) {
-        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
-        die("El archivo debe ser una imagen (jpeg, png, jpg o webp).");
-    } elseif($puntajeMetacritic < 0 || $puntajeMetacritic > 100){
-        echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
-        die("La puntuación debe estar entre 0 y 100.");
-    }
-
-    /* fin comprobaciones (por ahora) */
 
     try {
         //consulta para añadir el juego

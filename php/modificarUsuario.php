@@ -50,17 +50,17 @@ if (!isset($_SESSION['nombre_usuario'])) {
     <main>
         <form action="" method="post">
             <!--Campo para modificar el nombre de usuario -->
-            <label for="newUsername">Nuevo nombre de usuario (opcional): </label>
+            <label for="newUsername">Nuevo nombre de usuario <strong>(opcional)</strong>: </label>
             <input type="text" name="newUsername" placeholder="Escribe tu nuevo nombre de usuario" /> <br /> <br />
 
             <!--Campo para modificar el correo del usuario -->
-            <label for="newEmail">Nuevo correo (opcional): </label>
+            <label for="newEmail">Nuevo correo <strong>(opcional)</strong>: </label>
             <input type="email" name="newEmail" placeholder="Escribe otra dirección de correo" /> <br /> <br />
 
             <!--Campo para modificar la contraseña -->
             <label for="oldPassword">Tu actual contraseña: </label>
             <input type="password" name="oldPassword" placeholder="Obligatorio SOLO si vas a cambiar algo" /> <br />
-            <label for="newPassword">Nueva contraseña (opcional): </label>
+            <label for="newPassword">Nueva contraseña <strong>(opcional)</strong>: </label>
             <input type="password" name="newPassword" placeholder="Escribe tu nueva contraseña" /> <br />
             <label for="newPasswordCheck">Repite la nueva contraseña: </label>
             <input type="password" name="newPasswordCheck" /> <br />
@@ -76,8 +76,7 @@ if (!isset($_SESSION['nombre_usuario'])) {
     </main>
 
     <footer>
-        &copy; 2025 Creada por Alonso (<a href="https://github.com/alockgoy/juegospendientes"
-            target="_blank">@alockgoy</a> en redes sociales).
+        &copy; 2025 Creada por <a href="https://github.com/alockgoy/juegospendientes" target="_blank">@alockgoy</a>.
     </footer>
 </body>
 
@@ -265,8 +264,8 @@ if ($nombre_usuario === $_SESSION['nombre_usuario']) {
     }
 
 } else {
-    //cerrar la sesión si el nombre colocado en la url no es el de la sesión
-    header("Location: ./logout.php");
+    //redirigir si el nombre colocado en la url no es el de la sesión
+    header("Location: https://www.youtube.com/watch?v=dQw4w9WgXcQ");
     exit();
 }
 ?>

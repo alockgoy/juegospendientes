@@ -1,5 +1,5 @@
 <?php
-$host = '172.21.0.2';
+$host = 'localhost';
 $usuario = 'root';
 $password = 'root';
 $nombreBaseDatos = 'JuegosPendientes';

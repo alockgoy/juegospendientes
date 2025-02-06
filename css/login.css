@@ -84,4 +84,8 @@
     text-decoration: underline;
     transition: text-decoration 2s;
 }
+
+a#claveOlvidada:hover{
+  color: red;
+}
   

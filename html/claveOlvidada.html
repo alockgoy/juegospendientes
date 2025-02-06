@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/claveOlvidada.css">
+    <title>Nueva contraseña</title>
+</head>
+
+<body>
+    <header>
+        <h2>Solicitar una nueva contraseña</h2>
+    </header>
+
+    <main>
+        <!--Formulario que solicita el correo al que se enviará una nueva contraseña-->
+        <form action="../php/claveOlvidada.php" method="post">
+            <!--Campo del correo-->
+            <label for="email">Escribe tu correo: </label>
+            <input type="email" name="email" placeholder="Tu correo electrónico" required />
+
+            <br/>
+
+            <!--Botón para enviar el formulario-->
+            <button type="submit">Obtener una nueva contraseña</button>
+
+            <!--Enlace para volver atrás-->
+            <section>
+                <a href="./login.html">Volver atrás</a>
+            </section>
+        </form>
+    </main>
+
+    <footer>
+        &copy; 2025 Creada por <a href="https://github.com/alockgoy/juegospendientes" target="_blank">@alockgoy</a>.
+    </footer>
+</body>
+
+</html>

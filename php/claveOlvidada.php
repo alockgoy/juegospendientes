@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -105,8 +105,8 @@
             // Contenido del correo
             $mail->isHTML(true);
             $mail->Subject = "Clave nueva generada.";
-            $mail->Body = "<p>¡Hola $correo! Se ha recibido una solicitud para cambiar tu contraseña. ¡No te preocupes!</p>
-            <p>Tu nueva contraseña es: <strong>$nuevaClave</strong></p>
+            $mail->Body = "<p>¡Hola $correo! Se ha recibido una solicitud para cambiar tu clave. ¡No te preocupes!</p>
+            <p>Tu nueva clave es: <strong>$nuevaClave</strong></p>
             <p>Puedes cambiarla siempre que quieras desde el apartado de modificar tu cuenta</p>";
 
             // Enviar el correo

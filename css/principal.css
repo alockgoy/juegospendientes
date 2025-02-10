@@ -31,12 +31,15 @@ nav a {
     padding: 5px 10px;
     border: 1px solid white;
     border-radius: 5px;
+    white-space: nowrap;
 }
 
 nav a:hover{
     background-color: white;
     color: black;
 }
+
+
 
 main {
     padding: 20px;
@@ -113,8 +116,41 @@ footer {
     padding: 10px 0;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Añade un poco de separación visual */
     margin-top: 20px; /* Da un poco de espacio entre el main y el footer */
+    position: absolute;
+    bottom: 0;
   }
 footer a{
     color: blue;
 }
 
+/* Estilos responsivos para pantallas pequeñas */
+@media (max-width: 600px) {
+    nav {
+        flex-direction: column; /* Cambia a columnas */
+        align-items: center; /* Centra los enlaces */
+        gap: 15px; /* Aumenta la separación entre los elementos */
+    }
+
+    nav a {
+        width: 90%; /* Haz que los enlaces ocupen más espacio en pantalla */
+        text-align: center;
+        padding: 10px; /* Aumenta el padding interno para hacerlos más grandes */
+        margin: 5px 0; /* Agrega margen para evitar que se toquen */
+        text-decoration: underline;
+        border: none;
+    }
+
+    .anade{
+        text-decoration-color: green;
+    }
+
+    #modificar{
+        text-decoration-color: orange;
+    }
+
+    #borrar{
+        text-decoration-color: red;
+    }
+
+    
+}

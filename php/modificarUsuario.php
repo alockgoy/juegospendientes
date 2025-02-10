@@ -29,7 +29,7 @@ if (!isset($_SESSION['nombre_usuario'])) {
 
 <!--Código HTML -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">

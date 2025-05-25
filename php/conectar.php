@@ -1,8 +1,8 @@
 <?php 
 
     //depuración para mostrar errores
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);    
+    // error_reporting(E_ALL);
+    // ini_set('display_errors', 1);    
 
     //comprobar que existe el archivo de configuración
     $configPath = __DIR__ . '/../sql/config.php';

@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $poster_tmp = $_FILES['poster']['tmp_name'];
         $directorioPoster = '../img/avatares_juegos/';
         if (!is_dir($directorioPoster)) {
-            mkdir($directorioPoster, 0755, true);
+            mkdir($directorioPoster, 0750, true);
         }
 
         // eliminar espacios en blanco en el nombre del archivo del poster

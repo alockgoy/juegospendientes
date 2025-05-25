@@ -17,6 +17,7 @@ header {
     padding: 1rem 0;
     text-align: center;
     z-index: 1000;
+    box-sizing: border-box; /* Incluye padding en el width */
 }
 
 nav {
@@ -125,6 +126,11 @@ footer a{
 
 /* Estilos responsivos para pantallas pequeñas */
 @media (max-width: 600px) {
+    /* Aumentar el padding-top del body para compensar el header más alto */
+    body {
+        padding-top: 220px; /* Aumentado significativamente para mobile */
+    }
+
     nav {
         flex-direction: column; /* Cambia a columnas */
         align-items: center; /* Centra los enlaces */
@@ -152,5 +158,9 @@ footer a{
         text-decoration-color: red;
     }
 
-    
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+    }
 }

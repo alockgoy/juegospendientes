@@ -1,8 +1,14 @@
 /* Estilos generales */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
 body {
     font-family: sans-serif;
-    margin: 0;
-    padding: 0;
     background-color: #f0f0f0;
     padding-top: 100px;
 }
@@ -35,14 +41,13 @@ nav a {
     white-space: nowrap;
 }
 
-nav a:hover{
+nav a:hover {
     background-color: white;
     color: black;
 }
 
-
-
 main {
+    flex: 1;
     padding: 20px;
 }
 
@@ -54,12 +59,17 @@ main {
     margin-right: 3%;
 }
 
-.contenedor { /* Contenedor para los datos del juego */
-    border: 1px solid #ddd; /* Borde sutil */
+.contenedor {
+    /* Contenedor para los datos del juego */
+    border: 1px solid #ddd;
+    /* Borde sutil */
     padding: 10px;
-    border-radius: 5px; /* Bordes redondeados */
-    text-align: left; /* Alinea el texto a la izquierda */
-    margin-top: 10px; /* Separación de la imagen */
+    border-radius: 5px;
+    /* Bordes redondeados */
+    text-align: left;
+    /* Alinea el texto a la izquierda */
+    margin-top: 10px;
+    /* Separación de la imagen */
 }
 
 .contenedor a {
@@ -76,85 +86,93 @@ main {
     border-radius: 8px;
 }
 
-.indicador{
+.indicador {
     background-color: grey;
     color: white;
 }
 
-.indicador:hover{
+.indicador:hover {
     background-color: white;
     color: black;
 }
 
-img{
-    max-width: 300px; 
+img {
+    max-width: 300px;
     max-height: 300px;
     display: block;
-    margin: 0 auto 10px; /* Centra la imagen horizontalmente */
+    margin: 0 auto 10px;
+    /* Centra la imagen horizontalmente */
     border-radius: 5px;
 }
 
-#borrar:hover{
+#borrar:hover {
     background-color: red;
     color: white;
 }
 
-.anade:hover{
+.anade:hover {
     background-color: green;
     color: white;
 }
 
-#modificar:hover{
+#modificar:hover {
     background-color: orange;
     color: white;
 }
 
 footer {
+    position: static; 
     width: 100%;
     background-color: #333;
     color: white;
     text-align: center;
     padding: 10px 0;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Añade un poco de separación visual */
-    margin-top: 20px; /* Da un poco de espacio entre el main y el footer */
-    position: absolute;
-    bottom: 0;
-  }
-footer a{
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+footer a {
     color: blue;
 }
 
 /* Estilos responsivos para pantallas pequeñas */
 @media (max-width: 600px) {
+
     /* Aumentar el padding-top del body para compensar el header más alto */
     body {
-        padding-top: 220px; /* Aumentado significativamente para mobile */
+        padding-top: 220px;
+        /* Aumentado significativamente para mobile */
     }
 
     nav {
-        flex-direction: column; /* Cambia a columnas */
-        align-items: center; /* Centra los enlaces */
-        gap: 15px; /* Aumenta la separación entre los elementos */
+        flex-direction: column;
+        /* Cambia a columnas */
+        align-items: center;
+        /* Centra los enlaces */
+        gap: 15px;
+        /* Aumenta la separación entre los elementos */
     }
 
     nav a {
-        width: 90%; /* Haz que los enlaces ocupen más espacio en pantalla */
+        width: 90%;
+        /* Haz que los enlaces ocupen más espacio en pantalla */
         text-align: center;
-        padding: 10px; /* Aumenta el padding interno para hacerlos más grandes */
-        margin: 5px 0; /* Agrega margen para evitar que se toquen */
+        padding: 10px;
+        /* Aumenta el padding interno para hacerlos más grandes */
+        margin: 5px 0;
+        /* Agrega margen para evitar que se toquen */
         text-decoration: underline;
         border: none;
     }
 
-    .anade{
+    .anade {
         text-decoration-color: green;
     }
 
-    #modificar{
+    #modificar {
         text-decoration-color: orange;
     }
 
-    #borrar{
+    #borrar {
         text-decoration-color: red;
     }
 

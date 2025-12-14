@@ -115,23 +115,49 @@ async function seleccionarJuego(juego) {
     inputBusqueda.value = juego.name;
 }
 
-// Función para descargar y convertir la imagen
+// Función para descargar y convertir la imagen usando PHP como proxy
 async function descargarImagen(url, nombreJuego) {
     try {
-        const response = await fetch(url);
-        const blob = await response.blob();
+        // Llamar al PHP que descarga la imagen
+        const response = await fetch('../php/descargarImagenJuego.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                url: url,
+                nombre: nombreJuego
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('Error en la respuesta del servidor');
+        }
+
+        const data = await response.json();
+
+        if (data.error) {
+            throw new Error(data.error);
+        }
+
+        // Convertir base64 a Blob
+        const byteCharacters = atob(data.base64);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: data.mimeType });
 
         // Crear un archivo File a partir del Blob
-        const extension = url.split('.').pop().split('?')[0];
-        const nombreArchivo = `${nombreJuego.replace(/[^a-z0-9]/gi, '_')}.${extension}`;
-        const archivo = new File([blob], nombreArchivo, { type: blob.type });
+        const archivo = new File([blob], data.nombreArchivo, { type: data.mimeType });
 
         // Crear un DataTransfer para asignar el archivo al input
         const dataTransfer = new DataTransfer();
         dataTransfer.items.add(archivo);
         inputPoster.files = dataTransfer.files;
 
-        posterInfo.textContent = `✓ Imagen cargada: ${nombreArchivo}`;
+        posterInfo.textContent = `✓ Imagen cargada: ${data.nombreArchivo} (${Math.round(data.size / 1024)}KB)`;
         posterInfo.style.color = 'green';
 
     } catch (error) {

@@ -139,7 +139,7 @@
             // if ($error_info) {
             //     echo "<p>Error del sistema: " . $error_info['message'] . "</p>";
             // }
-            exit();
+            die("<p>Error al subir el poster.</p>");
         }
 
         // ruta final para guardar en la base de datos
@@ -175,7 +175,7 @@
             //cerrar la conexión
             $conectar->close();
 
-            //refirigir a la página principal
+            //redirigir a la página principal
             header("Location: ./principal.php");
         } catch (mysqli_sql_exception $e) {
             echo "<a href='./principal.php'>Volver atrás</a><br/><br/>";
